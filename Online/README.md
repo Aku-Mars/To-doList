@@ -19,3 +19,6 @@ Installasi :
 4. Install Express (Dilanjutkan Dengan package.json)
 5. Install mongoose
 6. Jalankan 'node server.js'
+
+Noted :
+Gunakanan Semua Tools dalam Versi Terbaru Terutama Node.js Dan Mongodb
