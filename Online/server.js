@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const app = express();
 
 // Hubungkan ke database MongoDB (gantilah URL sesuai dengan database Anda)
-mongoose.connect('mongodb+srv://Mars:Mars123@database.xvhmibk.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://Mars:Mars123@database.xvhmibk.mongodb.net/?retryWrites=true&w=majority')
   .then(() => {
     console.log('Connected to MongoDB');
   })

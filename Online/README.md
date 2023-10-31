@@ -13,11 +13,16 @@ Tema Gelap dan Terang: Pengguna dapat memilih tema gelap atau terang sesuai deng
 Tampilan Responsif: Aplikasi ini dirancang agar responsif, sehingga dapat digunakan dengan baik pada perangkat berlayar kecil seperti ponsel.
 
 Installasi :
-1. Intall Node.js
+1. Intall Node.js (Node.js versi 16.20.1)
+- npm install node.js
+- curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+- source ~/.nvm/nvm.sh
+- nvm install 16
+- nvm use 16
 2. Install Mongodb Community Saja (https://www.mongodb.com/docs/manual/installation/)
 3. Masuk Kedalam Folder Online / Tempat disimpan
-4. Install Express (Dilanjutkan Dengan package.json)
-5. Install mongoose
+4. Install Express (npm install express)
+5. Install mongoose (npm install mongoose)
 6. Jalankan npm install package.json terlebih dahulu
 7. Jalankan 'node server.js'
 
