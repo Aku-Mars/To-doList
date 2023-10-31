@@ -101,67 +101,47 @@
     const dateInput = document.getElementById('dateInput');
     const themeSelect = document.getElementById('theme');
 
-    // Mendapatkan daftar tugas saat halaman dimuat
-    function loadTasks() {
-        fetch('/tasks')
-            .then(response => response.json())
-            .then(data => {
-                // Menampilkan daftar tugas di dalam HTML
-                taskList.innerHTML = '';
-                data.forEach(task => {
-                    const taskItem = document.createElement('li');
-                    taskItem.textContent = task.task;
-
-                    // Tombol untuk menghapus tugas
-                    const deleteButton = document.createElement('button');
-                    deleteButton.textContent = 'Hapus';
-                    deleteButton.addEventListener('click', () => {
-                        // Mengirim permintaan DELETE ke rute '/tasks/:id'
-                        fetch(`/tasks/${task._id}`, { method: 'DELETE' })
-                            .then(response => response.json())
-                            .then(result => {
-                                // Memuat ulang daftar tugas setelah penghapusan
-                                loadTasks();
-                            })
-                            .catch(error => {
-                                console.error('Error deleting task:', error);
-                            });
-                    });
-
-                    taskItem.appendChild(deleteButton);
-                    taskList.appendChild(taskItem);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching tasks:', error);
-            });
-    }
-
-    // Menambahkan tugas baru saat formulir diserahkan
-    addTaskForm.addEventListener('submit', event => {
-        event.preventDefault();
-        const task = taskInput.value;
-        const date = dateInput.value;
-        if (task.trim() !== '') {
-            // Mengirim permintaan POST ke rute '/tasks' dengan data tugas
-            fetch('/tasks', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ task, date }),
-            })
-            .then(response => response.json())
-            .then(newTask => {
-                taskInput.value = '';
-                dateInput.value = '';
-                loadTasks(); // Memuat ulang daftar tugas setelah menambahkan tugas baru
-            })
-            .catch(error => {
-                console.error('Error adding task:', error);
-            });
-        }
+// Mengambil daftar tugas menggunakan permintaan GET
+function loadTasks() {
+    fetch('/tasks', {
+        method: 'GET' // Menggunakan metode GET untuk mengambil daftar tugas
+    })
+    .then(response => response.json())
+    .then(data => {
+        taskList.innerHTML = '';
+        data.forEach(task => {
+            // ...
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching tasks:', error);
     });
+}
+
+// Menambahkan tugas baru menggunakan permintaan POST
+addTaskForm.addEventListener('submit', event => {
+    event.preventDefault();
+    const task = taskInput.value;
+    const date = dateInput.value;
+    if (task.trim() !== '') {
+        fetch('/tasks', {
+            method: 'POST', // Menggunakan metode POST untuk menambahkan tugas baru
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ task, date }),
+        })
+        .then(response => response.json())
+        .then(newTask => {
+            taskInput.value = '';
+            dateInput.value = '';
+            loadTasks();
+        })
+        .catch(error => {
+            console.error('Error adding task:', error);
+        });
+    }
+});
 
     // Simpan tema saat diubah
     themeSelect.addEventListener('change', () => {
