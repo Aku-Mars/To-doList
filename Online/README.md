@@ -1,4 +1,4 @@
-Aplikasi To-Do List Secara Offline
+Aplikasi To-Do List Secara Online
 
 Deskripsi:
 Aplikasi To-Do List adalah sebuah aplikasi sederhana yang memungkinkan pengguna untuk membuat, mengedit, dan menghapus daftar tugas atau kegiatan yang perlu dilakukan. Pengguna dapat memasukkan nama tugas beserta tanggal pelaksanaan tugas, dan tugas-tugas ini akan disimpan dalam penyimpanan lokal browser sehingga data dapat dipertahankan bahkan setelah penutupan browser.
