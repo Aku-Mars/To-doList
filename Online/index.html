@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 10%;
+            max-width: fit-content;
+            max-height: fit-content;
+            margin: 0 auto;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+        .tambah {
+            text-align: center;
+        }
+        #todo-list {
+            width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+        #todo-list h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        #todo-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        #todo-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            border-bottom: 1px solid #ccc;
+        }
+        #todo-list li input[type="text"] {
+            flex: 2;
+            margin-right: 10px;
+        }
+        #todo-list li input[type="date"] {
+            flex: 1;
+            margin-right: 10px;
+        }
+        #todo-list li button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        #theme-toggle {
+            width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div id="todo-list">
+        <h1>To-Do List</h1>
+        <ul id="tasks">
+        </ul>
+        <div class="tambah">
+            <input type="text" id="task" placeholder="Tambah tugas baru" />
+            <input type="date" id="taskDate" />
+            <button id="add">Tambah</button>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div id="theme-toggle">
+        <label for="theme">Pilih tema: </label>
+        <select id="theme">
+            <option value="light">Terang</option>
+            <option value="dark">Gelap</option>
+        </select>
+    </div>
+</div>
+<script>
+    const taskList = document.getElementById('tasks');
+    const taskInput = document.getElementById('task');
+    const taskDateInput = document.getElementById('taskDate');
+    const addBtn = document.getElementById('add');
+    const themeSelect = document.getElementById('theme');
+    // Fungsi untuk menampilkan tugas dari localStorage
+    function loadTasks() {
+        const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        savedTasks.forEach(taskData => {
+            const taskItem = createTaskElement(taskData.task, taskData.date);
+            taskList.appendChild(taskItem);
+        });
+    }
+    loadTasks();
+    function saveTasksToLocalStorage() {
+        const tasks = Array.from(taskList.children).map(taskItem => {
+            const inputField = taskItem.querySelector('input[type="text"]');
+            const dateField = taskItem.querySelector('input[type="date"]');
+            return { task: inputField.value, date: dateField.value };
+        });
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+    function createTaskElement(taskText, taskDate) {
+        const taskItem = document.createElement('li');
+        taskItem.innerHTML = `
+            <input type="text" value="${taskText}" />
+            <input type="date" value="${taskDate}" />
+            <button class="edit">Edit</button>
+            <button class="delete">Hapus</button>
+        `;
+        const editBtn = taskItem.querySelector('.edit');
+        const deleteBtn = taskItem.querySelector('.delete');
+        editBtn.addEventListener('click', function() {
+            const inputField = taskItem.querySelector('input[type="text"]');
+            inputField.disabled = !inputField.disabled;
+            inputField.focus();
+            saveTasksToLocalStorage();
+        });
+        deleteBtn.addEventListener('click', function() {
+            taskList.removeChild(taskItem);
+            saveTasksToLocalStorage();
+        });
+        return taskItem;
+    }
+    function addTask() {
+        const taskText = taskInput.value;
+        const taskDate = taskDateInput.value;
+        if (taskText.trim() !== '') {
+            const taskItem = createTaskElement(taskText, taskDate);
+            taskList.appendChild(taskItem);
+            taskInput.value = '';
+            taskDateInput.value = '';
+            saveTasksToLocalStorage();
+        }
+    }
+    addBtn.addEventListener('click', addTask);
+    taskInput.addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {
+            addTask();
+        }
+    });
+    // Simpan tema saat diubah
+    themeSelect.addEventListener('change', function() {
+        const selectedTheme = themeSelect.value;
+        localStorage.setItem('theme', selectedTheme);
+        document.body.style.backgroundColor = selectedTheme === 'dark' ? '#333' : '#f0f0f0';
+    });
+</script>
+</body>
+</html>
