@@ -11,7 +11,7 @@ const pool = mariadb.createPool({
   host: '147.139.195.118', // Ganti dengan host MariaDB Anda
   user: 'Mars', // Ganti dengan nama pengguna database
   password: 'Mars123//', // Ganti dengan kata sandi database
-  database: 'todo, // Ganti dengan nama database
+  database: 'todo', // Ganti dengan nama database
 });
 
 app.post('/tasks', async (req, res) => {
