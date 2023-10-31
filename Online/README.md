@@ -15,7 +15,7 @@ Tampilan Responsif: Aplikasi ini dirancang agar responsif, sehingga dapat diguna
 Installasi :
 1. Intall Node.js
 2. Install Mongodb Community Saja (https://www.mongodb.com/docs/manual/installation/)
-3. Install Express (Dilanjutkan Dengan package.json)
-4. Install mongoose
-5. Masuk Kedalam Folder Online / Tempat disimpan
-6. Jalankan 'Node server.js'
+3. Masuk Kedalam Folder Online / Tempat disimpan
+4. Install Express (Dilanjutkan Dengan package.json)
+5. Install mongoose
+6. Jalankan 'node server.js'
