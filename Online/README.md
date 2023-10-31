@@ -11,3 +11,9 @@ Menghapus Tugas: Pengguna dapat menghapus tugas yang tidak diperlukan dengan men
 Simpan di Local Storage: Semua tugas yang dimasukkan disimpan di penyimpanan lokal browser sehingga data tetap ada bahkan setelah penutupan browser.
 Tema Gelap dan Terang: Pengguna dapat memilih tema gelap atau terang sesuai dengan preferensi mereka.
 Tampilan Responsif: Aplikasi ini dirancang agar responsif, sehingga dapat digunakan dengan baik pada perangkat berlayar kecil seperti ponsel.
+
+Installasi :
+1. Intall Node.js
+2. Install Mongodb Community Saja (https://www.mongodb.com/docs/manual/installation/)
+3. Install Express (Dilanjutkan Dengan package.json)
+4. Install mongoose
