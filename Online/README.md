@@ -17,3 +17,5 @@ Installasi :
 2. Install Mongodb Community Saja (https://www.mongodb.com/docs/manual/installation/)
 3. Install Express (Dilanjutkan Dengan package.json)
 4. Install mongoose
+5. Masuk Kedalam Folder Online / Tempat disimpan
+6. Jalankan 'Node server.js'
