@@ -77,9 +77,11 @@
         <ul id="tasks">
         </ul>
         <div class="tambah">
-            <input type="text" id="task" placeholder="Tambah tugas baru" />
-            <input type="date" id="taskDate" />
-            <button id="add">Tambah</button>
+            <form id="addTaskForm">
+                <input type="text" id="taskInput" placeholder="Tambah tugas baru" />
+                <input type="date" id="dateInput" />
+                <button id="add">Tambah</button>
+            </form>
         </div>
     </div>
 </div>
@@ -93,21 +95,40 @@
     </div>
 </div>
 <script>
-    const taskList = document.getElementById('taskList');
+    const taskList = document.getElementById('tasks');
     const addTaskForm = document.getElementById('addTaskForm');
     const taskInput = document.getElementById('taskInput');
     const dateInput = document.getElementById('dateInput');
     const themeSelect = document.getElementById('theme');
 
-    // Fungsi untuk menampilkan tugas dari server
+    // Mendapatkan daftar tugas saat halaman dimuat
     function loadTasks() {
         fetch('/tasks')
             .then(response => response.json())
             .then(data => {
-                taskList.innerHTML = ''; // Menghapus tugas yang sudah ada
+                // Menampilkan daftar tugas di dalam HTML
+                taskList.innerHTML = '';
                 data.forEach(task => {
                     const taskItem = document.createElement('li');
                     taskItem.textContent = task.task;
+
+                    // Tombol untuk menghapus tugas
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Hapus';
+                    deleteButton.addEventListener('click', () => {
+                        // Mengirim permintaan DELETE ke rute '/tasks/:id'
+                        fetch(`/tasks/${task._id}`, { method: 'DELETE' })
+                            .then(response => response.json())
+                            .then(result => {
+                                // Memuat ulang daftar tugas setelah penghapusan
+                                loadTasks();
+                            })
+                            .catch(error => {
+                                console.error('Error deleting task:', error);
+                            });
+                    });
+
+                    taskItem.appendChild(deleteButton);
                     taskList.appendChild(taskItem);
                 });
             })
@@ -115,30 +136,30 @@
                 console.error('Error fetching tasks:', error);
             });
     }
-    loadTasks();
 
-    // Fungsi untuk menambahkan tugas baru
+    // Menambahkan tugas baru saat formulir diserahkan
     addTaskForm.addEventListener('submit', event => {
         event.preventDefault();
         const task = taskInput.value;
         const date = dateInput.value;
         if (task.trim() !== '') {
+            // Mengirim permintaan POST ke rute '/tasks' dengan data tugas
             fetch('/tasks', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ task, date })
+                body: JSON.stringify({ task, date }),
             })
-                .then(response => response.json())
-                .then(newTask => {
-                    taskInput.value = '';
-                    dateInput.value = '';
-                    loadTasks(); // Memuat ulang tugas setelah menambahkan tugas baru
-                })
-                .catch(error => {
-                    console.error('Error adding task:', error);
-                });
+            .then(response => response.json())
+            .then(newTask => {
+                taskInput.value = '';
+                dateInput.value = '';
+                loadTasks(); // Memuat ulang daftar tugas setelah menambahkan tugas baru
+            })
+            .catch(error => {
+                console.error('Error adding task:', error);
+            });
         }
     });
 
@@ -148,6 +169,9 @@
         localStorage.setItem('theme', selectedTheme);
         document.body.style.backgroundColor = selectedTheme === 'dark' ? '#333' : '#f0f0f0';
     });
+
+    // Memuat daftar tugas saat halaman dimuat
+    loadTasks();
 </script>
 </body>
 </html>
