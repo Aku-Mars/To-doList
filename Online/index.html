@@ -93,69 +93,57 @@
     </div>
 </div>
 <script>
-    const taskList = document.getElementById('tasks');
-    const taskInput = document.getElementById('task');
-    const taskDateInput = document.getElementById('taskDate');
-    const addBtn = document.getElementById('add');
+    const taskList = document.getElementById('taskList');
+    const addTaskForm = document.getElementById('addTaskForm');
+    const taskInput = document.getElementById('taskInput');
+    const dateInput = document.getElementById('dateInput');
     const themeSelect = document.getElementById('theme');
-    // Fungsi untuk menampilkan tugas dari localStorage
+
+    // Fungsi untuk menampilkan tugas dari server
     function loadTasks() {
-        const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
-        savedTasks.forEach(taskData => {
-            const taskItem = createTaskElement(taskData.task, taskData.date);
-            taskList.appendChild(taskItem);
-        });
+        fetch('/tasks')
+            .then(response => response.json())
+            .then(data => {
+                taskList.innerHTML = ''; // Menghapus tugas yang sudah ada
+                data.forEach(task => {
+                    const taskItem = document.createElement('li');
+                    taskItem.textContent = task.task;
+                    taskList.appendChild(taskItem);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching tasks:', error);
+            });
     }
     loadTasks();
-    function saveTasksToLocalStorage() {
-        const tasks = Array.from(taskList.children).map(taskItem => {
-            const inputField = taskItem.querySelector('input[type="text"]');
-            const dateField = taskItem.querySelector('input[type="date"]');
-            return { task: inputField.value, date: dateField.value };
-        });
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-    }
-    function createTaskElement(taskText, taskDate) {
-        const taskItem = document.createElement('li');
-        taskItem.innerHTML = `
-            <input type="text" value="${taskText}" />
-            <input type="date" value="${taskDate}" />
-            <button class="edit">Edit</button>
-            <button class="delete">Hapus</button>
-        `;
-        const editBtn = taskItem.querySelector('.edit');
-        const deleteBtn = taskItem.querySelector('.delete');
-        editBtn.addEventListener('click', function() {
-            const inputField = taskItem.querySelector('input[type="text"]');
-            inputField.disabled = !inputField.disabled;
-            inputField.focus();
-            saveTasksToLocalStorage();
-        });
-        deleteBtn.addEventListener('click', function() {
-            taskList.removeChild(taskItem);
-            saveTasksToLocalStorage();
-        });
-        return taskItem;
-    }
-    function addTask() {
-        const taskText = taskInput.value;
-        const taskDate = taskDateInput.value;
-        if (taskText.trim() !== '') {
-            const taskItem = createTaskElement(taskText, taskDate);
-            taskList.appendChild(taskItem);
-            taskInput.value = '';
-            taskDateInput.value = '';
-            saveTasksToLocalStorage();
-        }
-    }
-    addBtn.addEventListener('click', addTask);
-    taskInput.addEventListener('keyup', function(event) {
-        if (event.key === 'Enter') {
-            addTask();
+
+    // Fungsi untuk menambahkan tugas baru
+    addTaskForm.addEventListener('submit', event => {
+        event.preventDefault();
+        const task = taskInput.value;
+        const date = dateInput.value;
+        if (task.trim() !== '') {
+            fetch('/tasks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ task, date })
+            })
+                .then(response => response.json())
+                .then(newTask => {
+                    taskInput.value = '';
+                    dateInput.value = '';
+                    loadTasks(); // Memuat ulang tugas setelah menambahkan tugas baru
+                })
+                .catch(error => {
+                    console.error('Error adding task:', error);
+                });
         }
     });
+
     // Simpan tema saat diubah
-    themeSelect.addEventListener('change', function() {
+    themeSelect.addEventListener('change', () => {
         const selectedTheme = themeSelect.value;
         localStorage.setItem('theme', selectedTheme);
         document.body.style.backgroundColor = selectedTheme === 'dark' ? '#333' : '#f0f0f0';

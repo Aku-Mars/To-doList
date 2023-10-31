@@ -23,7 +23,7 @@ Installasi :
 3. Masuk Kedalam Folder Online / Tempat disimpan
 4. Install Express (npm install express)
 5. Install mongoose (npm install mongoose)
-6. Jalankan npm install package.json terlebih dahulu
+6. Jalankan 'npm install' untuk package.json terlebih dahulu
 7. Jalankan 'node server.js'
 
 Noted :
