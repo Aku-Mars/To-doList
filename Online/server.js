@@ -22,5 +22,5 @@ const Task = mongoose.model('Task', taskSchema);
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send
-  });
+  res.send('Hello, World!');
+});
