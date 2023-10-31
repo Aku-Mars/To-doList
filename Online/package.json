@@ -1,4 +1,14 @@
-"dependencies": {
-    "express": "^4.17.1",
-    // lainnya
-  }  
+{
+  "name": "TO-DO LIST ONLINE",
+  "version": "1.0.0",
+  "description": "To-do List Yang Bisa Dipakai Bersama-sama",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Nama Anda",
+  "license": "Lisensi Anda"
+}
