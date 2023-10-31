@@ -20,6 +20,8 @@ Installasi :
 - nvm install 16
 - nvm use 16
 2. Install Mongodb Community Saja (https://www.mongodb.com/docs/manual/installation/)
+- sudo service mongod start
+- sudo service mongod status
 3. Masuk Kedalam Folder Online / Tempat disimpan
 4. Install Express 'npm install express'
 5. Install mongoose 'npm install mongoose'
