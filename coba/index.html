@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ToDo List</title>
+</head>
+<body>
+    <h1>ToDo List</h1>
+
+    <!-- Form untuk menambahkan tugas -->
+    <form id="task-form">
+        <input type="text" id="task" placeholder="Tambahkan tugas" required>
+        <input type="date" id="due-date">
+        <button type="submit">Tambah</button>
+    </form>
+
+    <!-- Daftar tugas -->
+    <ul id="task-list"></ul>
+
+    <script>
+        // Database JSON untuk menyimpan daftar tugas
+        let tasks = [];
+
+        // Fungsi untuk menampilkan daftar tugas ke dalam ul
+        function displayTasks() {
+            const taskList = document.getElementById("task-list");
+            taskList.innerHTML = "";
+
+            tasks.forEach((task, index) => {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `
+                    <strong>${task.task}</strong> (Tenggat: ${task.date})
+                    <button onclick="completeTask(${index})">Selesai</button>
+                    <button onclick="editTask(${index})">Edit</button>
+                    <button onclick="deleteTask(${index})">Hapus</button>
+                `;
+
+                if (task.completed) {
+                    listItem.style.textDecoration = "line-through";
+                }
+
+                taskList.appendChild(listItem);
+            });
+        }
+
+        // Fungsi untuk menambahkan tugas
+        function addTask(task, date) {
+            tasks.push({ task, date, completed: false });
+            displayTasks();
+        }
+
+        // Fungsi untuk menandai tugas sebagai selesai
+        function completeTask(index) {
+            tasks[index].completed = true;
+            displayTasks();
+        }
+
+        // Fungsi untuk mengedit tugas
+        function editTask(index) {
+            const newTaskText = prompt("Edit tugas:", tasks[index].task);
+            if (newTaskText !== null) {
+                tasks[index].task = newTaskText;
+                displayTasks();
+            }
+        }
+
+        // Fungsi untuk menghapus tugas
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            displayTasks();
+        }
+
+        // Tangani submit form
+        document.getElementById("task-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const taskInput = document.getElementById("task");
+            const dueDateInput = document.getElementById("due-date");
+            const taskText = taskInput.value.trim();
+            const dueDate = dueDateInput.value;
+
+            if (taskText !== "") {
+                addTask(taskText, dueDate);
+                taskInput.value = "";
+                dueDateInput.value = "";
+            }
+        });
+
+        // Tampilkan tugas awal (jika ada) saat halaman dimuat
+        if (localStorage.getItem("tasks")) {
+            tasks = JSON.parse(localStorage.getItem("tasks"));
+        }
+        displayTasks();
+
+        // Simpan tugas ke database JSON saat ada perubahan
+        function saveTasks() {
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+        }
+
+        window.addEventListener("beforeunload", saveTasks);
+    </script>
+</body>
+</html>
