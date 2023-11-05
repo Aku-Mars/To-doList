@@ -3,10 +3,16 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = process.env.PORT || 3005; // Port server, bisa Anda sesuaikan
+const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// Middleware untuk mengatur tipe konten respons menjadi JSON
+app.use((req, res, next) => {
+  res.setHeader('Content-Type', 'application/json');
+  next();
+});
 
 // Hubungkan ke database MongoDB (gantilah URL sesuai dengan database Anda)
 mongoose.connect('mongodb+srv://Mars:Mars123@database.xvhmibk.mongodb.net/?retryWrites=true&w=majority')
