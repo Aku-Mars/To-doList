@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task</title>
+</head>
+<body>
+    <h1>Edit Task</h1>
+    <form method="POST" action="/edit_task/{{ task.id }}">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" value="{{ task.title }}" requ
+ired><br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description">{{ task.description }}</te
+xtarea><br>
+        <label for="due_date">Due Date:</label>
+        <input type="date" id="due_date" name="due_date" value="{{ task.due_date
+ }}"><br>
+        <button type="submit">Save Task</button>
+    </form>
+    <a href="/">Back to To-Do List</a>
+</body>
+</html>

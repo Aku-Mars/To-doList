@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List PSTI C</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 0 auto;
+            margin-top: 10px; 
+            max-width: 800px;
+        }
+
+        h1 {
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 10px 0;
+        }
+
+        strong {
+            font-size: 1.2em;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: blue;
+            margin-right: 10px;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        form {
+            text-align: left;
+        }
+
+        label, input, textarea {
+            display: block;
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #008CBA;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .button-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .edit-button, .delete-button {
+            background-color: #008CBA;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-right: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .edit-button:hover, .delete-button:hover {
+            background-color: #005B8F;
+        }
+
+        #theme-toggle {
+            margin-top: 10px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 0 auto;
+            margin-top: 10px; 
+            max-width: 800px;
+        }
+
+        body.dark {
+            color: white; /* Atur warna teks menjadi putih di tema gelap */
+            background-color: #333; /* Atur latar belakang menjadi hitam di tema gelap */
+        }
+
+        /* CSS untuk layar dengan lebar maksimum 600px */
+        @media screen and (max-width: 600px) {
+            body {
+                font-size: 16px; /* Mengurangi ukuran font pada layar kecil */
+                padding: 10px; /* Mengurangi padding pada layar kecil */
+            }
+
+            ul {
+                padding: 10px; /* Mengurangi padding pada ul (daftar) pada layar kecil */
+            }
+
+            li {
+                padding: 10px; /* Mengurangi padding pada tiap item daftar pada layar kecil */
+            }
+
+            .button-container {
+                flex-direction: column; /* Mengubah tata letak tombol menjadi tumpukan pada layar kecil */
+                align-items: flex-start; /* Mengubah tata letak tombol menjadi kiri pada layar kecil */
+            }
+
+            #theme-toggle {
+                font-size: 16px; /* Mengurangi ukuran font pada layar kecil */
+                padding: 10px;
+            }
+            /* Tambahan perubahan tampilan lainnya sesuai kebutuhan */
+        }
+    </style>
+</head>
+<body id="body">
+    <h1>TUGAS PSTI-C</h1>
+    <ul id="task-list">
+        {% for task in tasks %}
+            <li data-due-date="{{ task.due_date }}">
+                <strong>{{ task.title }}</strong>
+                <br>
+                <!-- Ganti nama hari dalam bahasa Inggris dengan bahasa Indonesia -->
+                <p>Tenggat Waktu: {{ dayNames[task.due_date.strftime("%A")] }}, {{ task.due_date.strftime("%d %B %Y") }}</p>
+                <p>{{ task.description }}</p>
+                <span class="button-container">
+                    <a class="edit-button" href="/edit_task/{{ task.id }}">Edit</a>
+                    <a class="delete-button" href="/delete_task/{{ task.id }}">Hapus</a>
+                </span>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Tambahkan Tugas Baru</h2>
+    <form method="POST" action="/add_task">
+        <label for="title">Tugas:</label>
+        <input type="text" id="title" name="title" required>
+        <label for="due_date">Tanggal Tenggat Waktu:</label>
+        <input type="date" id="due_date" name="due_date">
+        <label for="description">Deskripsi / Informasi Tambahan:</label>
+        <textarea id="description" name="description"></textarea>
+        <button type="submit">Tambahkan</button>
+    </form>
+
+    <div id="theme-toggle">
+        <label for="theme">Pilih tema: </label>
+        <select id="theme">
+            <option value="light">Terang</option>
+            <option value="dark">Gelap</option>
+        </select>
+    </div>
+
+    <script>
+
+        const dayNames = {
+            'Monday': 'Senin',
+            'Tuesday': 'Selasa',
+            'Wednesday': 'Rabu',
+            'Thursday': 'Kamis',
+            'Friday': 'Jumat',
+            'Saturday': 'Sabtu',
+            'Sunday': 'Minggu'
+        };
+
+        //Sorting
+        const taskList = document.getElementById("task-list");
+
+        // Mengambil semua elemen li dan mengubahnya menjadi array
+        const tasks = Array.from(taskList.children);
+    
+        // Mengurutkan elemen-elemen berdasarkan tanggal tenggat waktu
+        tasks.sort((a, b) => {
+            const dateA = new Date(a.getAttribute("data-due-date"));
+            const dateB = new Date(b.getAttribute("data-due-date"));
+            return dateA - dateB;
+        });
+    
+        // Memasukkan elemen-elemen yang telah diurutkan kembali ke dalam ul
+        tasks.forEach(task => taskList.appendChild(task));
+        
+        //Tema
+        const themeSelect = document.getElementById("theme");
+        const body = document.getElementById("body"); // Ubah sesuai dengan id yang telah ditambahkan
+    
+        // Fungsi untuk mengatur tema saat halaman dimuat
+        function setInitialTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.classList.add('dark');
+                themeSelect.value = 'dark';
+            } else {
+                body.classList.remove('dark');
+                themeSelect.value = 'light';
+            }
+        }
+    
+        themeSelect.addEventListener('change', function() {
+            const selectedTheme = themeSelect.value;
+            localStorage.setItem('theme', selectedTheme);
+            body.classList.toggle('dark', selectedTheme === 'dark');
+        });
+    
+        // Panggil fungsi untuk mengatur tema saat halaman dimuat
+        setInitialTheme();
+    </script>
+</body>
+</html>
