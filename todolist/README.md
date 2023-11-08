@@ -7,12 +7,13 @@ APPLIKASI TO-DO LIST DENGAN DATABASE MARIADB
 - Membuat Database --
 - CREATE DATABASE todo_list
 - USE todo_list
-" CREATE TABLE tasks (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    due_date DATE,
-    description TEXT,
-    is_completed BOOLEAN DEFAULT FALSE
+  
+CREATE TABLE tasks (
+     id INT AUTO_INCREMENT PRIMARY KEY,
+     title VARCHAR(255) NOT NULL,
+     due_date DATE,
+     description TEXT,
+     is_completed BOOLEAN DEFAULT FALSE
 ); "
 
 -- Membuat User --
