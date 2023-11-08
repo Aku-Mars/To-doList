@@ -1,32 +1,38 @@
-Aplikasi To-Do List Secara Online
+APPLIKASI TO-DO LIST DENGAN DATABASE MARIADB
 
-Deskripsi:
-Aplikasi To-Do List adalah sebuah aplikasi sederhana yang memungkinkan pengguna untuk membuat, mengedit, dan menghapus daftar tugas atau kegiatan yang perlu dilakukan. Pengguna dapat memasukkan nama tugas beserta tanggal pelaksanaan tugas, dan tugas-tugas ini akan disimpan dalam penyimpanan lokal browser sehingga data dapat dipertahankan bahkan setelah penutupan browser.
+1. sudo apt install apache2
+2. sudo apt install mariadb
+3. sudo mariadb
+4. Masukan Command Berikut
 
-Fitur Utama:
+-- Membuat Database --
+- CREATE DATABASE todo_list
+- USE todo_list
+  
+CREATE TABLE tasks (
+     id INT AUTO_INCREMENT PRIMARY KEY,
+     title VARCHAR(255) NOT NULL,
+     due_date DATE,
+     description TEXT,
+     is_completed BOOLEAN DEFAULT FALSE
+); "
 
-Menambah Tugas: Pengguna dapat menambahkan tugas baru dengan mengetikkan nama tugas dan memilih tanggal pelaksanaan.
-Mengedit Tugas: Setiap tugas dapat diedit dengan mengklik tombol "Edit". Ini memungkinkan pengguna untuk memperbarui nama atau tanggal tugas.
-Menghapus Tugas: Pengguna dapat menghapus tugas yang tidak diperlukan dengan mengklik tombol "Hapus".
-Simpan di Local Storage: Semua tugas yang dimasukkan disimpan di penyimpanan lokal browser sehingga data tetap ada bahkan setelah penutupan browser.
-Tema Gelap dan Terang: Pengguna dapat memilih tema gelap atau terang sesuai dengan preferensi mereka.
-Tampilan Responsif: Aplikasi ini dirancang agar responsif, sehingga dapat digunakan dengan baik pada perangkat berlayar kecil seperti ponsel.
+-- Membuat User --
+- CREATE USER 'new_user'@'localhost' IDENTIFIED BY 'password';
+- GRANT ALL PRIVILEGES ON todo_list.* TO 'new_user'@'localhost';
+- FLUSH PRIVILEGES;
+- exit;
 
-Installasi :
-1. Intall Node.js (Node.js versi 16.20.1)
-- npm install node.js
-- curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-- source ~/.nvm/nvm.sh
-- nvm install 16
-- nvm use 16
-2. Install Mongodb Community Saja (https://www.mongodb.com/docs/manual/installation/)
-- sudo service mongod start
-- sudo service mongod status
-3. Masuk Kedalam Folder Online / Tempat disimpan
-4. Install Express 'npm install express'
-5. Install mongoose 'npm install mongoose'
-6. Jalankan 'npm install' untuk package.json terlebih dahulu
-7. Jalankan 'node server.js'
+CATATAN! Ubah new_user dan password sesuai keinginan dan Buka app.py 
+kemudian ubah username dan password yang ada
 
-Noted :
-Gunakanan Semua Tools dalam Versi Terbaru Terutama Node.js Dan Mongodb
+5. masuk kebagian file contoh 'cd /var/www/html'
+6. git clone https://github.com/Aku-Mars/To-doList.git
+7. lanjut
+- pip install Flask
+- pip install Flask-SQLAlchemy
+- pip install Flask-Babel
+
+kalau tidak bisa install node.js dlu
+( LIHAT DALAM BENTUK RAR UNTUK MENGCOPY COMMAND DENGAN MUDAH )
+
