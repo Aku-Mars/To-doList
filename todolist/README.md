@@ -4,22 +4,24 @@ APPLIKASI TO-DO LIST DENGAN DATABASE MARIADB
 2. sudo apt install mariadb
 3. sudo mariadb
 4. Masukan Command Berikut
+
 -- Membuat Database --
-CREATE DATABASE todo_list
-USE todo_list
+- CREATE DATABASE todo_list
+- USE todo_list
+  
 CREATE TABLE tasks (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    due_date DATE,
-    description TEXT,
-    is_completed BOOLEAN DEFAULT FALSE
-);
+     id INT AUTO_INCREMENT PRIMARY KEY,
+     title VARCHAR(255) NOT NULL,
+     due_date DATE,
+     description TEXT,
+     is_completed BOOLEAN DEFAULT FALSE
+); "
 
 -- Membuat User --
-CREATE USER 'new_user'@'localhost' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON todo_list.* TO 'new_user'@'localhost';
-FLUSH PRIVILEGES;
-exit;
+- CREATE USER 'new_user'@'localhost' IDENTIFIED BY 'password';
+- GRANT ALL PRIVILEGES ON todo_list.* TO 'new_user'@'localhost';
+- FLUSH PRIVILEGES;
+- exit;
 
 CATATAN! Ubah new_user dan password sesuai keinginan dan Buka app.py 
 kemudian ubah username dan password yang ada
@@ -27,10 +29,10 @@ kemudian ubah username dan password yang ada
 5. masuk kebagian file contoh 'cd /var/www/html'
 6. git clone https://github.com/Aku-Mars/To-doList.git
 7. lanjut
-pip install Flask
-pip install Flask-SQLAlchemy
-pip install Flask-Babel
+- pip install Flask
+- pip install Flask-SQLAlchemy
+- pip install Flask-Babel
 
 kalau tidak bisa install node.js dlu
-
+( LIHAT DALAM BENTUK RAR UNTUK MENGCOPY COMMAND DENGAN MUDAH )
 
