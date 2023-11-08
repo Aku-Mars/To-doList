@@ -113,6 +113,48 @@
             background-color: #333; /* Atur latar belakang menjadi hitam di tema gelap */
         }
 
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Gaya konten pop-up dalam tema terang */
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            margin-top: 20%;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+
+       /* Gaya pop-up dalam tema gelap */
+       .popup.dark, .popup.dark .popup-content {
+        background-color: #333; /* Atur latar belakang menjadi hitam di tema gelap */
+        color: white; /* Atur warna teks menjadi putih di tema gelap */
+    }        
+
+        /* Gaya pop-up dalam tema gelap */
+        .popup.dark {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Gaya pop-up dalam tema gelap */
+        .popup.dark, .popup.dark .popup-content {
+            color: white; /* Atur warna teks menjadi putih di tema gelap */
+        }
+
         /* CSS untuk layar dengan lebar maksimum 600px */
         @media screen and (max-width: 600px) {
             body {
@@ -139,11 +181,12 @@
             }
             /* Tambahan perubahan tampilan lainnya sesuai kebutuhan */
         }
+
     </style>
 </head>
 <body id="body">
     <h1>TUGAS PSTI-C</h1>
-    <img src= "https://cdn.discordapp.com/attachments/1038771559608881294/1171786339763621980/signbot.gif?ex=655df212&is=654b7d12&hm=f2129d023f301248ec48fc95d8f142b9a5868fd790c4893bcf6df5342b74d008&">
+    <img src="https://cdn.discordapp.com/attachments/1038771559608881294/1171786339763621980/signbot.gif?ex=655df212&is=654b7d12&hm=f2129d023f301248ec48fc95d8f142b9a5868fd790c4893bcf6df5342b74d008">
     <ul id="task-list">
         {% for task in tasks %}
             <li data-due-date="{{ task.due_date }}">
@@ -177,6 +220,13 @@
             <option value="light">Terang</option>
             <option value="dark">Gelap</option>
         </select>
+    </div>
+
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <p>Perhatian! Jangan Asal Hapus, Ubah Ataupun Tambah Karena Ini List Bersama</p>
+            <button id="close-popup">Tutup</button>
+        </div>
     </div>
 
     <script>
@@ -240,6 +290,40 @@
             }
         }
         
+        // JavaScript untuk menampilkan pop-up saat halaman dimuat
+        document.addEventListener("DOMContentLoaded", function() {
+            const popup = document.getElementById("popup");
+            const closeButton = document.getElementById("close-popup");
+            const themeSelect = document.getElementById("theme");
+            const body = document.getElementById("body");
+
+            // Tampilkan pop-up
+            popup.style.display = "block";
+
+            // Tutup pop-up ketika tombol "Tutup" ditekan
+            closeButton.addEventListener("click", function() {
+                popup.style.display = "none";
+            });
+
+            // Panggil fungsi untuk mengatur tema pop-up saat halaman dimuat
+            setPopupTheme(themeSelect.value);
+
+            // Ketika pengguna mengganti tema, perbarui tema pop-up
+            themeSelect.addEventListener("change", function() {
+                localStorage.setItem('theme', themeSelect.value);
+                setPopupTheme(themeSelect.value);
+                body.classList.toggle('dark', themeSelect.value === 'dark');
+            });
+
+            // Fungsi untuk menyesuaikan tema pop-up
+            function setPopupTheme(selectedTheme) {
+                if (selectedTheme === "dark") {
+                    popup.classList.add("dark");
+                } else {
+                    popup.classList.remove("dark");
+                }
+            }
+        });
     </script>
 </body>
 </html>
