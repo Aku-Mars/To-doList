@@ -143,6 +143,7 @@
 </head>
 <body id="body">
     <h1>TUGAS PSTI-C</h1>
+    <img src= "https://cdn.discordapp.com/attachments/1038771559608881294/1171786339763621980/signbot.gif?ex=655df212&is=654b7d12&hm=f2129d023f301248ec48fc95d8f142b9a5868fd790c4893bcf6df5342b74d008&">
     <ul id="task-list">
         {% for task in tasks %}
             <li data-due-date="{{ task.due_date }}">
@@ -153,7 +154,7 @@
                 <p>{{ task.description }}</p>
                 <span class="button-container">
                     <a class="edit-button" href="/edit_task/{{ task.id }}">Edit</a>
-                    <a class="delete-button" href="/delete_task/{{ task.id }}">Hapus</a>
+                    <a class="delete-button" href="/delete_task/{{ task.id }}" onclick="confirmDelete(event)">Hapus</a>
                 </span>
             </li>
         {% endfor %}
@@ -230,6 +231,15 @@
     
         // Panggil fungsi untuk mengatur tema saat halaman dimuat
         setInitialTheme();
+
+        function confirmDelete(event) {
+            const isConfirmed = confirm("Apakah Anda yakin ingin menghapus tugas ini?");
+            if (isConfirmed) {
+                // Lanjutkan dengan menghapus tugas jika disetujui
+                window.location.href = event.target.getAttribute("href");
+            }
+        }
+        
     </script>
 </body>
 </html>
