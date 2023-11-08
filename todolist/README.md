@@ -1,4 +1,4 @@
-APLIKASI TO-DO LIST DENGAN DATABASE MARIADB 
+# APLIKASI TO-DO LIST DENGAN DATABASE MARIADB 
 
 1. ```sudo apt install apache2```
 2. ```sudo apt install mariadb```
