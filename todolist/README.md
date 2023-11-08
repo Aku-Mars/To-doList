@@ -34,5 +34,5 @@ kemudian ubah username dan password yang ada
 - pip install Flask-Babel
 
 kalau tidak bisa install node.js dlu
-
+( LIHAT DALAM BENTUK RAR UNTUK MENGCOPY COMMAND DENGAN MUDAH )
 
