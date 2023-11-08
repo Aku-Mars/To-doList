@@ -51,12 +51,16 @@ def edit_task(id):
 
     return render_template('edit_task.html', task=task)
 
-@app.route('/delete_task/<int:id>')
+@app.route('/delete_task/<int:id>', methods=['GET', 'POST'])
 def delete_task(id):
     task = Task.query.get(id)
-    db.session.delete(task)
-    db.session.commit()
-    return redirect(url_for('index'))
+    
+    if request.method == 'POST':
+        db.session.delete(task)
+        db.session.commit()
+        return redirect(url_for('index'))
+
+    return render_template('confirm_delete.html', task=task)
 
 if __name__ == '__main__':
     with app.app_context():
