@@ -4,7 +4,7 @@ APPLIKASI TO-DO LIST DENGAN DATABASE MARIADB
 2. sudo apt install mariadb
 3. sudo mariadb
 4. Masukan Command Berikut
-- Membuat Database --
+-- Membuat Database --
 - CREATE DATABASE todo_list
 - USE todo_list
   
