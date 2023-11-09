@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 0 auto;
+            margin-top: 10px; 
+            max-width: 800px;
+        }
+
+        h1 {
+            margin-top: 20px;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        label, input, textarea {
+            display: block;
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #008CBA;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin: 15px auto;
+        }
+
+        button.back-button {
+            background-color: #005B8F; /* Warna latar belakang saat hover */
+        }
+
+        #theme-toggle {
+            margin-top: 10px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 0 auto;
+            margin-top: 10px; 
+            max-width: 800px;
+        }
+
+        body.dark {
+            color: white;
+            background-color: #333;
+        }
+
+        @media screen and (max-width: 600px) {
+            body {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            #theme-toggle {
+                font-size: 16px;
+                padding: 10px;
+            }
+        }
+    </style>
+
+<body>
+    <h1>Konfirmasi Hapus Tugas</h1>
+    <p>Apakah Anda Yakin Ingin Menghapus Tugas: "{{ task.title }}"?</p>
+    <form action="{{ url_for('delete_task', id=task.id) }}" method="post">
+        <button type="submit" value="Yes" />Iya</button>
+        <button type="button" onclick="location.href='{{ url_for('index') }}'">Batal</button>
+    </form>
+</body>
+</html>

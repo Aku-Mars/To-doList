@@ -197,7 +197,8 @@
                 <p>{{ task.description }}</p>
                 <span class="button-container">
                     <a class="edit-button" href="/edit_task/{{ task.id }}">Edit</a>
-                    <a class="delete-button" href="/delete_task/{{ task.id }}" onclick="confirmDelete(event)">Hapus</a>
+                    <a class="delete-button" href="/delete_task/{{ task.id }}">Hapus</a>
+                    <!-- <a class="delete-button" href="/delete_task/{{ task.id }}" onclick="confirmDelete(event)">Hapus</a> -->
                 </span>
     </li>
         {% endfor %}
