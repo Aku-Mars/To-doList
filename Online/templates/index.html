@@ -291,40 +291,52 @@
             }
         }
         
-        // JavaScript untuk menampilkan pop-up saat halaman dimuat
-        document.addEventListener("DOMContentLoaded", function() {
-            const popup = document.getElementById("popup");
-            const closeButton = document.getElementById("close-popup");
-            const themeSelect = document.getElementById("theme");
-            const body = document.getElementById("body");
+    // JavaScript untuk menampilkan pop-up hanya sekali setiap 1 jam
+    document.addEventListener("DOMContentLoaded", function () {
+        const popup = document.getElementById("popup");
+        const closeButton = document.getElementById("close-popup");
+        const themeSelect = document.getElementById("theme");
+        const body = document.getElementById("body");
 
-            // Tampilkan pop-up
+        // Mengecek apakah pop-up pernah ditampilkan sebelumnya
+        const lastPopupTime = localStorage.getItem('lastPopupTime');
+        const currentTime = new Date().getTime();
+
+        if (!lastPopupTime || (currentTime - lastPopupTime) > (60 * 60 * 1000)) {
+            // Tampilkan pop-up jika belum pernah ditampilkan atau sudah lebih dari 1 jam
             popup.style.display = "block";
+            // Simpan waktu terakhir pop-up ditampilkan
+            localStorage.setItem('lastPopupTime', currentTime);
+        } else {
+            // Sembunyikan pop-up jika tidak memenuhi kondisi di atas
+            popup.style.display = "none";
+        }
 
-            // Tutup pop-up ketika tombol "Tutup" ditekan
-            closeButton.addEventListener("click", function() {
-                popup.style.display = "none";
-            });
-
-            // Panggil fungsi untuk mengatur tema pop-up saat halaman dimuat
-            setPopupTheme(themeSelect.value);
-
-            // Ketika pengguna mengganti tema, perbarui tema pop-up
-            themeSelect.addEventListener("change", function() {
-                localStorage.setItem('theme', themeSelect.value);
-                setPopupTheme(themeSelect.value);
-                body.classList.toggle('dark', themeSelect.value === 'dark');
-            });
-
-            // Fungsi untuk menyesuaikan tema pop-up
-            function setPopupTheme(selectedTheme) {
-                if (selectedTheme === "dark") {
-                    popup.classList.add("dark");
-                } else {
-                    popup.classList.remove("dark");
-                }
-            }
+        // Tutup pop-up ketika tombol "Tutup" ditekan
+        closeButton.addEventListener("click", function () {
+            popup.style.display = "none";
         });
+
+        // Panggil fungsi untuk mengatur tema pop-up saat halaman dimuat
+        setPopupTheme(themeSelect.value);
+
+        // Ketika pengguna mengganti tema, perbarui tema pop-up
+        themeSelect.addEventListener("change", function () {
+            localStorage.setItem('theme', themeSelect.value);
+            setPopupTheme(themeSelect.value);
+            body.classList.toggle('dark', themeSelect.value === 'dark');
+        });
+
+        // Fungsi untuk menyesuaikan tema pop-up
+        function setPopupTheme(selectedTheme) {
+            if (selectedTheme === "dark") {
+                popup.classList.add("dark");
+            } else {
+                popup.classList.remove("dark");
+            }
+        }
+    });
+    
     </script>
 </body>
 </html>
