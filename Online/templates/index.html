@@ -262,34 +262,51 @@
         const themeSelect = document.getElementById("theme");
         const body = document.getElementById("body"); // Ubah sesuai dengan id yang telah ditambahkan
     
-        // Fungsi untuk mengatur tema saat halaman dimuat
-        function setInitialTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                body.classList.add('dark');
-                themeSelect.value = 'dark';
-            } else {
-                body.classList.remove('dark');
-                themeSelect.value = 'light';
-            }
-        }
-    
-        themeSelect.addEventListener('change', function() {
-            const selectedTheme = themeSelect.value;
-            localStorage.setItem('theme', selectedTheme);
-            body.classList.toggle('dark', selectedTheme === 'dark');
-        });
-    
-        // Panggil fungsi untuk mengatur tema saat halaman dimuat
-        setInitialTheme();
+    // Set tema saat halaman dimuat
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        body.classList.add('dark');
+        themeSelect.value = 'dark';
+    } else {
+        body.classList.remove('dark');
+        themeSelect.value = 'light';
+    }
 
-        function confirmDelete(event) {
-            const isConfirmed = confirm("Apakah Anda yakin ingin menghapus tugas ini?");
-            if (isConfirmed) {
-                // Lanjutkan dengan menghapus tugas jika disetujui
-                window.location.href = event.target.getAttribute("href");
+    themeSelect.addEventListener('change', function () {
+        const selectedTheme = themeSelect.value;
+        localStorage.setItem('theme', selectedTheme);
+        body.classList.toggle('dark', selectedTheme === 'dark');
+        setPopupTheme(selectedTheme);
+    });
+
+    // Fungsi untuk menyesuaikan tema pop-up
+    function setPopupTheme(selectedTheme) {
+        const popup = document.getElementById("popup");
+        if (selectedTheme === "dark") {
+            popup.classList.add("dark");
+        } else {
+            popup.classList.remove("dark");
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // ... (kode yang ada sebelumnya)
+
+        themeSelect.addEventListener("change", function () {
+            localStorage.setItem('theme', themeSelect.value);
+            setPopupTheme(themeSelect.value);
+            body.classList.toggle('dark', themeSelect.value === 'dark');
+        });
+
+        function setPopupTheme(selectedTheme) {
+            const popup = document.getElementById("popup");
+            if (selectedTheme === "dark") {
+                popup.classList.add("dark");
+            } else {
+                popup.classList.remove("dark");
             }
         }
+    });
         
     // JavaScript untuk menampilkan pop-up hanya sekali setiap 1 jam
     document.addEventListener("DOMContentLoaded", function () {
