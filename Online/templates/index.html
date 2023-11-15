@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List PSTI C</title>
     <style>
+
+    /* Section Body */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -29,11 +31,10 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            padding: 10px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            padding: 20px;
             margin: 10px 0;
+            padding: 20px;
         }
 
         strong {
@@ -56,6 +57,7 @@
 
         form {
             text-align: left;
+            margin-left: 15px;
         }
 
         label, input, textarea {
@@ -63,6 +65,7 @@
             margin: 10px 0;
         }
 
+    /* Section Button */
         button {
             background-color: #008CBA;
             border-radius: 5px;
@@ -77,6 +80,16 @@
             display: flex;
             align-items: center;
             margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #008CBA;
+            transform: scale(1.1);
+        }
+        
+        #close-popup:hover {
+            background-color: #008CBA;
+            transform: scale(1.1);
         }
 
         .edit-button, .delete-button {
@@ -94,26 +107,22 @@
 
         .edit-button:hover, .delete-button:hover {
             background-color: #005B8F;
+            transform: scale(1.1);
         }
+        
 
+    /* Section Theme */
         #theme-toggle {
-            margin-top: 10px;
-            text-align: center;
             font-family: Arial, sans-serif;
             text-align: center;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             padding: 20px;
-            margin: 0 auto;
-            margin-top: 10px; 
+            margin: 20px;
             max-width: 800px;
         }
 
-        body.dark {
-            color: white; /* Atur warna teks menjadi putih di tema gelap */
-            background-color: #333; /* Atur latar belakang menjadi hitam di tema gelap */
-        }
-
+    /* Section Popup */
         .popup {
             display: none;
             position: fixed;
@@ -128,7 +137,6 @@
             align-items: center;
         }
 
-        /* Gaya konten pop-up dalam tema terang */
         .popup-content {
             background-color: white;
             padding: 20px;
@@ -140,51 +148,60 @@
             margin-right: 10%;
         }
 
-       /* Gaya pop-up dalam tema gelap */
-       .popup.dark, .popup.dark .popup-content {
-        background-color: #333; /* Atur latar belakang menjadi hitam di tema gelap */
-        color: white; /* Atur warna teks menjadi putih di tema gelap */
-    }        
-
-        /* Gaya pop-up dalam tema gelap */
-        .popup.dark {
-            background-color: rgba(255, 255, 255, 0.5);
+        /* Section Tema Gelap */
+        body.dark {
+            color: white; 
+            background-color: #2b2b2b; 
         }
 
-        /* Gaya pop-up dalam tema gelap */
-        .popup.dark, .popup.dark .popup-content {
-            color: white; /* Atur warna teks menjadi putih di tema gelap */
+        li.dark {
+            background-color: #1d1e22;
+            color: white;
+            box-shadow: 0 0 7px rgba(20, 161, 175, 0.2);
+        }
+        
+        #theme-toggle.dark {
+            background-color: #1d1e22;
+            color: white;
+            box-shadow: 0 0 7px rgba(20, 161, 175, 0.2);
+        }
+
+        .popup.dark .popup-content {
+            background-color: #1d1e22;
+            color: white; 
         }
 
         /* CSS untuk layar dengan lebar maksimum 600px */
         @media screen and (max-width: 600px) {
             body {
-                font-size: 16px; /* Mengurangi ukuran font pada layar kecil */
-                padding: 10px; /* Mengurangi padding pada layar kecil */
+                font-size: 16px; 
+                padding: 10px;
             }
 
             ul {
-                padding: 10px; /* Mengurangi padding pada ul (daftar) pada layar kecil */
+                padding: 12px;
+                text-align: justify;
             }
 
             li {
-                padding: 10px; /* Mengurangi padding pada tiap item daftar pada layar kecil */
+                padding: 12px; 
             }
 
             .button-container {
-                flex-direction: column; /* Mengubah tata letak tombol menjadi tumpukan pada layar kecil */
-                align-items: flex-start; /* Mengubah tata letak tombol menjadi kiri pada layar kecil */
+                flex-direction: column;
+                align-items: flex-start;
             }
 
             #theme-toggle {
-                font-size: 16px; /* Mengurangi ukuran font pada layar kecil */
+                font-size: 16px;
                 padding: 10px;
             }
-            /* Tambahan perubahan tampilan lainnya sesuai kebutuhan */
         }
 
     </style>
+
 </head>
+
 <body id="body">
     <h1>TUGAS PSTI-C</h1>
     <img src="https://cdn.discordapp.com/attachments/1038771559608881294/1171786339763621980/signbot.gif?ex=655df212&is=654b7d12&hm=f2129d023f301248ec48fc95d8f142b9a5868fd790c4893bcf6df5342b74d008">
@@ -199,7 +216,6 @@
                 <span class="button-container">
                     <a class="edit-button" href="/edit_task/{{ task.id }}">Edit</a>
                     <a class="delete-button" href="/delete_task/{{ task.id }}">Hapus</a>
-                    <!-- <a class="delete-button" href="/delete_task/{{ task.id }}" onclick="confirmDelete(event)">Hapus</a> -->
                 </span>
     </li>
         {% endfor %}
@@ -233,16 +249,6 @@
 
     <script>
 
-        const dayNames = {
-            'Monday': 'Senin',
-            'Tuesday': 'Selasa',
-            'Wednesday': 'Rabu',
-            'Thursday': 'Kamis',
-            'Friday': 'Jumat',
-            'Saturday': 'Sabtu',
-            'Sunday': 'Minggu'
-        };
-
         //Sorting
         const taskList = document.getElementById("task-list");
 
@@ -263,36 +269,55 @@
         const themeSelect = document.getElementById("theme");
         const body = document.getElementById("body"); // Ubah sesuai dengan id yang telah ditambahkan
     
-    // Set tema saat halaman dimuat
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        body.classList.add('dark');
-        themeSelect.value = 'dark';
-    } else {
-        body.classList.remove('dark');
-        themeSelect.value = 'light';
-    }
-
-    themeSelect.addEventListener('change', function () {
-        const selectedTheme = themeSelect.value;
-        localStorage.setItem('theme', selectedTheme);
-        body.classList.toggle('dark', selectedTheme === 'dark');
-        setPopupTheme(selectedTheme);
-    });
-
-    // Fungsi untuk menyesuaikan tema pop-up
-    function setPopupTheme(selectedTheme) {
-        const popup = document.getElementById("popup");
-        if (selectedTheme === "dark") {
-            popup.classList.add("dark");
+        // Set tema saat halaman dimuat
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark');
+            themeSelect.value = 'dark';
+            applyDarkModeStyles(); // Terapkan gaya untuk mode gelap
         } else {
-            popup.classList.remove("dark");
+            body.classList.remove('dark');
+            themeSelect.value = 'light';
         }
-    }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        // ... (kode yang ada sebelumnya)
+        themeSelect.addEventListener('change', function () {
+            const selectedTheme = themeSelect.value;
+            localStorage.setItem('theme', selectedTheme);
+            body.classList.toggle('dark', selectedTheme === 'dark');
+            if (selectedTheme === 'dark') {
+                applyDarkModeStyles(); // Terapkan gaya untuk mode gelap
+            } else {
+                removeDarkModeStyles(); // Hapus gaya untuk mode gelap
+            }
+        });
 
+        // Fungsi untuk menerapkan gaya tema gelap
+        function applyDarkModeStyles() {
+            const listItems = document.querySelectorAll("#task-list li");
+            listItems.forEach(item => item.classList.add("dark"));
+            document.getElementById("theme-toggle").classList.add("dark");
+            document.getElementById("body").style.padding = "20px"; // Atur padding untuk body dalam tema gelap
+        }
+
+        // Fungsi untuk menghapus gaya tema gelap
+        function removeDarkModeStyles() {
+            const listItems = document.querySelectorAll("#task-list li");
+            listItems.forEach(item => item.classList.remove("dark"));
+            document.getElementById("theme-toggle").classList.remove("dark");
+            document.getElementById("body").style.padding = "20px"; // Atur padding untuk body dalam tema terang
+        }
+
+        // Fungsi untuk menyesuaikan tema pop-up
+        function setPopupTheme(selectedTheme) {
+            const popup = document.getElementById("popup");
+            if (selectedTheme === "dark") {
+                popup.classList.add("dark");
+            } else {
+                popup.classList.remove("dark");
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
         themeSelect.addEventListener("change", function () {
             localStorage.setItem('theme', themeSelect.value);
             setPopupTheme(themeSelect.value);
@@ -307,14 +332,14 @@
                 popup.classList.remove("dark");
             }
         }
-    });
+        });
         
-    // JavaScript untuk menampilkan pop-up hanya sekali setiap 1 jam
-    document.addEventListener("DOMContentLoaded", function () {
-        const popup = document.getElementById("popup");
-        const closeButton = document.getElementById("close-popup");
-        const themeSelect = document.getElementById("theme");
-        const body = document.getElementById("body");
+        // JavaScript untuk menampilkan pop-up hanya sekali setiap 1 jam
+        document.addEventListener("DOMContentLoaded", function () {
+            const popup = document.getElementById("popup");
+            const closeButton = document.getElementById("close-popup");
+            const themeSelect = document.getElementById("theme");
+            const body = document.getElementById("body");
 
         // Mengecek apakah pop-up pernah ditampilkan sebelumnya
         const lastPopupTime = localStorage.getItem('lastPopupTime');
@@ -353,7 +378,7 @@
                 popup.classList.remove("dark");
             }
         }
-    });
+        });
     
     </script>
 </body>

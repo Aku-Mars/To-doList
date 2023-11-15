@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Task</title>
+    <title>Ubah Task</title>
     <style>
+
+    /* Section Body */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -12,7 +14,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             padding: 20px;
             margin: 0 auto;
-            margin-top: 10px; 
+            margin-top: 50px; 
             max-width: 800px;
         }
 
@@ -29,6 +31,7 @@
             margin: 10px 0;
         }
 
+    /* Section Button */
         button {
             background-color: #008CBA;
             border-radius: 5px;
@@ -37,12 +40,24 @@
             border: none;
             padding: 10px 20px;
             cursor: pointer;
+            margin-right: 5px; /* Margin around the button */
+        }
+
+        button:hover {
+            background-color: #005B8F;
+            transform: scale(1.1); /* Hover effect */
         }
 
         button.back-button {
-            background-color: #005B8F; /* Warna latar belakang saat hover */
+            background-color: #005B8F;
+            margin-right: 10px; /* Margin on the right for back button */
         }
 
+        button.back-button:hover {
+            background-color: #003366; /* Hover effect for back button */
+        }
+
+    /* Section Tema */
         #theme-toggle {
             margin-top: 10px;
             text-align: center;
@@ -58,7 +73,8 @@
 
         body.dark {
             color: white;
-            background-color: #333;
+            background-color: #2b2b2b;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
 
         @media screen and (max-width: 600px) {
@@ -83,7 +99,7 @@
         <input type="date" id="due_date" name="due_date" value="{{ task.due_date }}"><br>
         <label for="description">Deskripsi / Informasi Tambahan:</label>
         <textarea id="description" name="description">{{ task.description }}</textarea><br>
-        <button type="submit">Save Task</button>
+        <button type="submit">Simpan Tugas</button>
         <button class="back-button" type="button" onclick="window.location.href='/'">Kembali Ke List Tugas</button>
     </form>
 

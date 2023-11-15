@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Konfirmasi Hapus Tugas</title>
     <style>
+    
+    /* Section Body */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -11,7 +14,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             padding: 20px;
             margin: 0 auto;
-            margin-top: 10px; 
+            margin-top: 50px;
             max-width: 800px;
         }
 
@@ -23,11 +26,11 @@
             text-align: center;
         }
 
-        label, input, textarea {
-            display: block;
+        p {
             margin: 10px 0;
         }
 
+    /* Section Button */
         button {
             background-color: #008CBA;
             border-radius: 5px;
@@ -36,13 +39,23 @@
             border: none;
             padding: 10px 20px;
             cursor: pointer;
-            margin: 15px auto;
+            margin: 10px 5px; /* Adjusted margin for equal spacing */
+        }
+
+        button:hover {
+            background-color: #005B8F;
+            transform: scale(1.1);
         }
 
         button.back-button {
-            background-color: #005B8F; /* Warna latar belakang saat hover */
+            background-color: #005B8F;
         }
 
+        button.back-button:hover {
+            background-color: #003366;
+        }
+
+    /* Section Tema */
         #theme-toggle {
             margin-top: 10px;
             text-align: center;
@@ -52,13 +65,14 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             padding: 20px;
             margin: 0 auto;
-            margin-top: 10px; 
+            margin-top: 10px;
             max-width: 800px;
         }
 
         body.dark {
             color: white;
-            background-color: #333;
+            background-color: #2b2b2b;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
 
         @media screen and (max-width: 600px) {
@@ -73,20 +87,21 @@
             }
         }
     </style>
+</head>
 
-    <body id="body">
-        <h1>Konfirmasi Hapus Tugas</h1>
-        <p>Apakah Anda Yakin Ingin Menghapus Tugas: "{{ task.title }}"?</p>
-        <form action="{{ url_for('delete_task', id=task.id) }}" method="post">
-            <button type="submit" value="Yes" />Iya</button>
-            <button type="button" onclick="location.href='{{ url_for('index') }}'">Batal</button>
-        </form>
+<body id="body">
+    <h1>Konfirmasi Hapus Tugas</h1>
+    <p>Apakah Anda Yakin Ingin Menghapus Tugas: "{{ task.title }}"?</p>
+    <form action="{{ url_for('delete_task', id=task.id) }}" method="post">
+        <button type="submit">Iya</button>
+        <button type="button" class="back-button" onclick="location.href='{{ url_for('index') }}'">Batal</button>
+    </form>
 
-        <script>
-            // Mendapatkan tema dari localStorage
-            const savedTheme = localStorage.getItem('theme');
-            // Mengubah body sesuai tema yang diambil
-            document.getElementById('body').classList.add(savedTheme);
-        </script>
-    </body>
+    <script>
+        // Mendapatkan tema dari localStorage
+        const savedTheme = localStorage.getItem('theme');
+        // Mengubah body sesuai tema yang diambil
+        document.getElementById('body').classList.add(savedTheme);
+    </script>
+</body>
 </html>
