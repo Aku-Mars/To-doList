@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ubah Task</title>
     <style>
-
-    /* Section Body */
+        /* Section Body */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -24,6 +23,7 @@
 
         form {
             text-align: left;
+            margin-left: 30px;
         }
 
         label, input, textarea {
@@ -31,7 +31,27 @@
             margin: 10px 0;
         }
 
-    /* Section Button */
+        /* Section Card */
+        .card {
+            display: flex; 
+            flex-direction: column;
+            width: auto;
+            height: 425px;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .card__content {
+            flex: 1;
+            background-color: #c5c5c5;
+            border-radius: 0 0 12px 12px;
+            overflow: hidden;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Section Button */
         button {
             background-color: #008CBA;
             border-radius: 5px;
@@ -40,24 +60,24 @@
             border: none;
             padding: 10px 20px;
             cursor: pointer;
-            margin-right: 5px; /* Margin around the button */
+            margin-right: 7px;
         }
 
         button:hover {
             background-color: #005B8F;
-            transform: scale(1.1); /* Hover effect */
+            transform: scale(1.1); 
         }
 
         button.back-button {
             background-color: #005B8F;
-            margin-right: 10px; /* Margin on the right for back button */
+            margin-right: 10px;
         }
 
         button.back-button:hover {
-            background-color: #003366; /* Hover effect for back button */
+            background-color: #003366;
         }
 
-    /* Section Tema */
+        /* Section Tema */
         #theme-toggle {
             margin-top: 10px;
             text-align: center;
@@ -74,7 +94,7 @@
         body.dark {
             color: white;
             background-color: #2b2b2b;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
         @media screen and (max-width: 600px) {
@@ -91,21 +111,42 @@
     </style>
 </head>
 <body>
-    <h1>Edit Task</h1>
-    <form method="POST" action="/edit_task/{{ task.id }}">
-        <label for="title">Tugas:</label>
-        <input type="text" id="title" name="title" value="{{ task.title }}" required><br>
-        <label for="due_date">Tenggat Waktu:</label>
-        <input type="date" id="due_date" name="due_date" value="{{ task.due_date }}"><br>
-        <label for="description">Deskripsi / Informasi Tambahan:</label>
-        <textarea id="description" name="description">{{ task.description }}</textarea><br>
-        <button type="submit">Simpan Tugas</button>
-        <button class="back-button" type="button" onclick="window.location.href='/'">Kembali Ke List Tugas</button>
-    </form>
+
+    <div class="card" id="taskCard">
+        <div class="card__content">
+            <h1>Edit Task</h1>
+            <form method="POST" action="/edit_task/{{ task.id }}">
+                <label for="title">Tugas:</label>
+                <input type="text" id="title" name="title" value="{{ task.title }}" required><br>
+                <label for="due_date">Tenggat Waktu:</label>
+                <input type="date" id="due_date" name="due_date" value="{{ task.due_date }}"><br>
+                <label for="description">Deskripsi / Informasi Tambahan:</label>
+                <textarea id="description" name="description">{{ task.description }}</textarea><br>
+                <button type="submit">Simpan Tugas</button>
+                <button class="back-button" type="button" onclick="window.location.href='/'">Kembali Ke List Tugas</button>
+            </form>
+        </div>
+    </div>
 
     <script>
         const savedTheme = localStorage.getItem('theme');
         document.body.classList.add(savedTheme);
+
+        const taskCard = document.getElementById('taskCard');
+        if (savedTheme === 'dark') {
+            taskCard.querySelector('.card__content').style.backgroundColor = '#011522';
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+            if (document.body.classList.contains('dark')) {
+                taskCard.querySelector('.card__content').style.backgroundColor = '#011522';
+            } else {
+                taskCard.querySelector('.card__content').style.backgroundColor = '#c5c5c5';
+            }
+            const currentTheme = document.body.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', currentTheme);
+        }
     </script>
 </body>
 </html>
