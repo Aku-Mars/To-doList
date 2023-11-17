@@ -38,6 +38,15 @@ pip install Flask
 pip install Flask-SQLAlchemy
 pip install Flask-Babel
 ```
-
 **> kalau tidak bisa install node.js dlu**
+8. Terakhir ```python3 app.py```
+9. Cek didalam ip:3000
+
+### NEXT UPDATE
+- Penghitung Jumlah Tugas
+- History
+- Tampilan Dalam Bentuk Kalender
+- Login Kedalam Apps (Sehingga bisa login dan setiap user memiliki database masing-masing
+tetapi bisa dilihat orang lain / private sehingg dapat sharing satu sama lain)
+
 

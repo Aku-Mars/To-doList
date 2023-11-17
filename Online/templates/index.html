@@ -6,12 +6,12 @@
     <title>To-Do List PSTI C</title>
     <style>
 
-    /* Section Body */
+        /* Section Body */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 15px rgba(0, 0, 0);
             padding: 20px;
             margin: 0 auto;
             margin-top: 10px; 
@@ -32,7 +32,7 @@
             flex-direction: column;
             align-items: flex-start;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 7px rgba(0, 0, 0);
             margin: 10px 0;
             padding: 20px;
         }
@@ -65,7 +65,12 @@
             margin: 10px 0;
         }
 
-    /* Section Button */
+        #total-tasks-container {
+            text-align: left;
+            margin-left: 15px; /* Sesuaikan margin sesuai kebutuhan */
+        }
+
+        /* Section Button */
         button {
             background-color: #008CBA;
             border-radius: 5px;
@@ -105,24 +110,31 @@
             transition: background-color 0.3s ease;
         }
 
+        .delete-button {
+            background-color: #005B8F;
+        }
+
         .edit-button:hover, .delete-button:hover {
             background-color: #005B8F;
             transform: scale(1.1);
         }
         
+        .delete-button:hover {
+            background-color: #008CBA;
+        }
 
-    /* Section Theme */
+        /* Section Theme */
         #theme-toggle {
             font-family: Arial, sans-serif;
             text-align: center;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 7px rgba(0, 0, 0);
             padding: 20px;
             margin: 20px;
             max-width: 800px;
         }
 
-    /* Section Popup */
+        /* Section Popup */
         .popup {
             display: none;
             position: fixed;
@@ -151,24 +163,26 @@
         /* Section Tema Gelap */
         body.dark {
             color: white; 
-            background-color: #2b2b2b; 
+            background-color: #1d1e22;
+            box-shadow: 0 0 3px rgb(255 255 255);
         }
 
         li.dark {
-            background-color: #1d1e22;
+            background-color: #0F0F0F;
             color: white;
-            box-shadow: 0 0 7px rgba(20, 161, 175, 0.2);
+            box-shadow: 0 0 3px rgb(194 194 194);
         }
         
         #theme-toggle.dark {
-            background-color: #1d1e22;
+            background-color: #0F0F0F;
             color: white;
-            box-shadow: 0 0 7px rgba(20, 161, 175, 0.2);
+            box-shadow: 0 0 3px rgb(194 194 194);
         }
 
         .popup.dark .popup-content {
-            background-color: #1d1e22;
+            background-color: #0F0F0F;
             color: white; 
+            box-shadow: 0 0 3px rgb(194 194 194);
         }
 
         /* CSS untuk layar dengan lebar maksimum 600px */
@@ -205,6 +219,10 @@
 <body id="body">
     <h1>TUGAS PSTI-C</h1>
     <img src="https://cdn.discordapp.com/attachments/1038771559608881294/1171786339763621980/signbot.gif?ex=655df212&is=654b7d12&hm=f2129d023f301248ec48fc95d8f142b9a5868fd790c4893bcf6df5342b74d008">
+    
+    <div id="total-tasks-container">
+        <h2>Total Tugas: <span id="totalTasks">{{ tasks|length }}</span></h2>
+    </div>
     <ul id="task-list">
         {% for task in tasks %}
             <li data-due-date="{{ task.due_date }}">
@@ -264,6 +282,16 @@
     
         // Memasukkan elemen-elemen yang telah diurutkan kembali ke dalam ul
         tasks.forEach(task => taskList.appendChild(task));
+
+        // Fungsi untuk memperbarui penghitung jumlah tugas
+        function updateTaskCount() {
+            const totalTasksElement = document.getElementById("totalTasks");
+            const totalTasks = document.querySelectorAll("#task-list li").length;
+            totalTasksElement.textContent = totalTasks;
+        }
+
+        // Panggil fungsi untuk memperbarui penghitung jumlah tugas saat halaman dimuat
+        document.addEventListener("DOMContentLoaded", updateTaskCount);
         
         //Tema
         const themeSelect = document.getElementById("theme");
@@ -341,12 +369,12 @@
             const themeSelect = document.getElementById("theme");
             const body = document.getElementById("body");
 
-        // Mengecek apakah pop-up pernah ditampilkan sebelumnya
+        // Mengecek apakah pop-up pernah ditampilkan sebelumnya (Default 24 Jam)
         const lastPopupTime = localStorage.getItem('lastPopupTime');
         const currentTime = new Date().getTime();
 
-        if (!lastPopupTime || (currentTime - lastPopupTime) > (60 * 60 * 1000)) {
-            // Tampilkan pop-up jika belum pernah ditampilkan atau sudah lebih dari 1 jam
+        if (!lastPopupTime || (currentTime - lastPopupTime) > (24 * 60 * 60 * 1000)) {
+            // Tampilkan pop-up jika belum pernah ditampilkan atau sudah lebih dari 24 jam
             popup.style.display = "block";
             // Simpan waktu terakhir pop-up ditampilkan
             localStorage.setItem('lastPopupTime', currentTime);
