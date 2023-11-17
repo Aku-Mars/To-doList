@@ -39,6 +39,7 @@ pip install Flask-SQLAlchemy
 pip install Flask-Babel
 ```
 **> kalau tidak bisa install node.js dlu**
+
 8. Terakhir ```python3 app.py```
 9. Cek didalam ip:3000
 
