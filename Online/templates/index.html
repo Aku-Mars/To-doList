@@ -25,6 +25,7 @@
         ul {
             list-style: none;
             padding: 0;
+            margin-top: 35px;
         }
 
         li {
@@ -67,7 +68,7 @@
 
         #total-tasks-container {
             text-align: left;
-            margin-left: 15px; /* Sesuaikan margin sesuai kebutuhan */
+            margin-left: 15px;
         }
 
         /* Section Button */
@@ -94,6 +95,23 @@
         
         #close-popup:hover {
             background-color: #008CBA;
+            transform: scale(1.1);
+        }
+
+        .riwayat-button {
+            background-color: #008CBA;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .riwayat-button:hover {
+            background-color: #005B8F;
             transform: scale(1.1);
         }
 
@@ -222,10 +240,11 @@
     
     <div id="total-tasks-container">
         <h2>Total Tugas: <span id="totalTasks">{{ tasks|length }}</span></h2>
+        <a class="riwayat-button" href="{{ url_for('riwayat') }}">Buka Riwayat</a>
     </div>
     <ul id="task-list">
         {% for task in tasks %}
-            <li data-due-date="{{ task.due_date }}">
+            <li data-due-date="{{ task.due_date }}" data-task-id="{{ task.id }}">
                 <strong>{{ task.title }}</strong>
                 <br>
                 <!-- Ganti nama hari dalam bahasa Inggris dengan bahasa Indonesia -->
@@ -235,7 +254,7 @@
                     <a class="edit-button" href="/edit_task/{{ task.id }}">Edit</a>
                     <a class="delete-button" href="/delete_task/{{ task.id }}">Hapus</a>
                 </span>
-    </li>
+            </li>
         {% endfor %}
     </ul>
 
@@ -292,6 +311,15 @@
 
         // Panggil fungsi untuk memperbarui penghitung jumlah tugas saat halaman dimuat
         document.addEventListener("DOMContentLoaded", updateTaskCount);
+
+        // Fungsi untuk menampilkan konfirmasi sebelum menghapus tugas
+        function confirmDelete(taskId) {
+            const isConfirmed = confirm("Apakah Anda yakin ingin menghapus tugas ini?");
+            if (isConfirmed) {
+                // Jika dikonfirmasi, arahkan ke halaman delete_task dengan ID tugas
+                window.location.href = "/delete_task/" + taskId;
+            }
+        }
         
         //Tema
         const themeSelect = document.getElementById("theme");

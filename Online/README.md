@@ -44,8 +44,8 @@ pip install Flask-Babel
 9. Cek didalam ip:3000
 
 ### NEXT UPDATE
-- Penghitung Jumlah Tugas
-- History
+- Penghitung Jumlah Tugas (DONE)
+- History (DONE)
 - Tampilan Dalam Bentuk Kalender
 - Login Kedalam Apps (Sehingga bisa login dan setiap user memiliki database masing-masing
 tetapi bisa dilihat orang lain / private sehingg dapat sharing satu sama lain)
