@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, timedelta
+import pytz
+import secrets
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://mars:Mars123//@localhost/todo_list'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = 'your_secret_key'
+app.secret_key = secrets.token_hex(16)
 db = SQLAlchemy(app)
 
 class Task(db.Model):
@@ -116,7 +118,12 @@ def riwayat():
         'Sunday': 'Minggu'
     }
 
-    return render_template('riwayat.html', deleted_tasks=deleted_tasks, dayNames=day_names)
+    # Konversi waktu ke zona waktu Asia/Jakarta
+    jakarta_timezone = pytz.timezone('Asia/Jakarta')
+    for deleted_task in deleted_tasks:
+        deleted_task.deleted_at = deleted_task.deleted_at.astimezone(jakarta_timezone) + timedelta(hours=8)
+
+    return render_template('riwayat.html', deleted_tasks=deleted_tasks, dayNames=day_names, pytz=pytz)
 
 @app.route('/restore_task/<int:id>', methods=['GET', 'POST'])
 def restore_task(id):

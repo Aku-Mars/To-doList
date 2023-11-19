@@ -93,7 +93,7 @@
                 padding: 10px;
             }
             .card {
-                height: 170px;
+                height: 220px;
             }
         }
     </style>
@@ -102,8 +102,8 @@
 <body id="body">
     <div class="card">
         <div class="card__content">
-            <h1>Konfirmasi Hapus Tugas</h1>
-            <p>Apakah Anda Yakin Ingin Menghapus Tugas: "{{ task.title }}"?</p>
+            <h1>Konfirmasi Penyelesaian Tugas</h1>
+            <p>Apakah Anda Yakin Tugas "{{ task.title }}" Anda Sudah Selesai?</p>
             <form action="{{ url_for('delete_task', id=task.id) }}" method="post">
                 <button type="submit">Iya</button>
                 <button type="button" class="back-button" onclick="location.href='{{ url_for('index') }}'">Batal</button>
@@ -133,6 +133,7 @@
             const currentTheme = document.body.classList.contains('dark') ? 'dark' : 'light';
             localStorage.setItem('theme', currentTheme);
         }
+        
     </script>
 </body>
 </html>
