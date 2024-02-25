@@ -41,7 +41,8 @@ pip install Flask-Babel
 **> kalau tidak bisa install node.js dlu**
 
 8. Terakhir ```python3 app.py```
-9. Cek didalam ip:3000
+9. Dan Tekan Ctrl + Z dilanjut command ```bg``` agar berjalan di background
+10. Cek didalam ip:3000
 
 ### NEXT UPDATE
 - Penghitung Jumlah Tugas (DONE)
