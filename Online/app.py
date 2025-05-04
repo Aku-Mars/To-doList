@@ -3,6 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
 import pytz
 import secrets
+import pymysql
+pymysql.install_as_MySQLdb()
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://mars:Mars123//@localhost/todo_list'
