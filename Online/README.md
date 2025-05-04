@@ -37,6 +37,7 @@ kemudian ubah username dan password yang ada**
 pip install Flask
 pip install Flask-SQLAlchemy
 pip install Flask-Babel
+pip install pymysql
 ```
 **> kalau tidak bisa install node.js dlu**
 
