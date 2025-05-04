@@ -7,8 +7,8 @@
 
 **> Membuat Database**
 ```
-CREATE DATABASE todo_list
-USE todo_list
+CREATE DATABASE todo_list,
+USE todo_list;
 ```
 ```
 CREATE TABLE tasks (
